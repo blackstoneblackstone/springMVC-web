@@ -22,8 +22,8 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
     <script type="text/javascript" src="/js/zAlert.js" charset="utf-8"></script>
 
 <link rel="stylesheet" href="/css/screen_lottery_free.css">
-<script src="/tpl/static/artDialog/jquery.artDialog.js?skin=default"></script>
-<script src="/tpl/static/artDialog/plugins/iframeTools.js"></script>
+<script src="/js/artDialog/jquery.artDialog.js?skin=default"></script>
+<script src="/js/artDialog/plugins/iframeTools.js"></script>
 </head>
 <body class="FUN WALL" style="background-image:url(/image/default_bg.jpg);" >
 <div class="Panel Top" style="top: 0px;">

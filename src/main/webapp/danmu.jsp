@@ -15,12 +15,12 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 <head>
     <meta charset="utf-8">
     <title>弹幕</title>
-    <link rel="stylesheet" href="/css/danmu.css"  type="text/css" />
-    <script type="text/javascript" src="/js/modernizr.custom.17774.js"></script>
-    <script type="text/javascript" src="/js/easeljs-0.8.0.min.js"></script>
-    <script type="text/javascript" src="/js/tweenjs-0.6.0.min.js"></script>
-    <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="/js/jquery.transit.min.js"></script>
+    <link rel="stylesheet" href="<%= this.getServletContext().getContextPath() %>/css/danmu.css"  type="textcss" />
+    <script type="text/javascript" src="<%= this.getServletContext().getContextPath() %>/js/modernizr.custom.17774.js"></script>
+    <script type="text/javascript" src="<%= this.getServletContext().getContextPath() %>/js/easeljs-0.8.0.min.js"></script>
+    <script type="text/javascript" src="<%= this.getServletContext().getContextPath() %>/js/tweenjs-0.6.0.min.js"></script>
+    <script type="text/javascript" src="<%= this.getServletContext().getContextPath() %>/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="<%= this.getServletContext().getContextPath() %>/js/jquery.transit.min.js"></script>
     <style>
         .danmu-box{
             padding: 20px;
@@ -33,16 +33,16 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         var now=new Date().getTime();
         var danmuConfig = {
             domain: "wxscreen",
-            msgUrl: "/danmu/getmsg",
+            msgUrl: "<%= this.getServletContext().getContextPath() %>/danmu/getmsg",
             canvas:  0 ,
-            isDefaultStyle:  false };
+            isDefaultStyle:  true };
         //if(window !== top) {
         //  delete danmuConfig.msgUrl;
         //}
     </script>
 </head>
 
-<body style="background:url(/image/default_bg.jpg) no-repeat;background-size:cover; ">
+<body style="background:url(<%= this.getServletContext().getContextPath() %>/image/default_bg.jpg) no-repeat;background-size:cover; ">
 <div id="wrap">
     <div class="danmu-box">
         <div id="js_dRow0" class="danmu-row danmu-row1" style="top:20px;"></div>
@@ -93,7 +93,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         </div>
     </div>
 </div>
-<script type="text/javascript" src="/js/danmu.min.js"></script>
+<script type="text/javascript" src="<%= this.getServletContext().getContextPath() %>/js/danmu.min.js"></script>
 
 <script>
 

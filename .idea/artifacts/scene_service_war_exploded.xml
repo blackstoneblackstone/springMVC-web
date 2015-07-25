@@ -1,11 +1,9 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="scene_service:war exploded">
-    <output-path>$PROJECT_DIR$/src/main/webapp/WEB-INF/classes</output-path>
+    <output-path>$PROJECT_DIR$/src/main/webapp</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
-        <element id="directory" name="classes">
-          <element id="module-output" name="scene_service" />
-        </element>
+        <element id="directory" name="classes" />
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.0.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.0.2.RELEASE" />

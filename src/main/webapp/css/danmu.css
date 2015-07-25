@@ -43,6 +43,10 @@ body{ font-family:"Microsoft yahei", "SimHei"; color:green; overflow:hidden; bac
 .green{ color:#189c51;}
 .orange{ color:#ff7800;}
 .orange2{ color:#ff4000;}
+.blue{ color: #4dc3ff;}
+.yellow{color:yellow}
+.white{color:white}
+.purple{color: purple}
 
 .footer{ position:absolute; bottom:40px; left:50%; padding:0 40px; width:944px; margin-left:-512px;}
 .logo-box{}
