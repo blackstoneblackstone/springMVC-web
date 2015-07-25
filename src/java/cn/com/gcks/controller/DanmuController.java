@@ -33,7 +33,8 @@ public class DanmuController {
                         HttpSession session){
         //清空数据
         redisTemplate.opsForList().trim(type+"-"+id, 99999999, -1);
-        session.setAttribute("state",type+"-"+id);
+        session.setAttribute("state", type + "-" + id);
+        session.setAttribute("all_total",0);
         return "danmu";
     }
 
@@ -45,14 +46,18 @@ public class DanmuController {
         JSONArray list = null;
         try{
             list = msgService.getMsgList(table);
-            js.put("info","ok");
+            Integer j=(Integer)session.getAttribute("all_total");
+            if(list!=null){
+                j=j+list.length();
+            }
+            session.setAttribute("all_total",j);
+            js.put("info", "ok");
+            js.put("all_total",j.toString());
             js.put("message_list",list);
-            System.out.print(table);
-            System.out.println(list.length());
         }catch (Exception e){
-
+           e.printStackTrace();
         }
-        System.out.println(js.toString());
+
         return js.toString();
     }
 
