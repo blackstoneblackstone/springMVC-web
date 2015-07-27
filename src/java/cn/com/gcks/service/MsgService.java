@@ -44,21 +44,29 @@ public class MsgService {
         for (String msgStr:list) {
             JSONObject jsonMsg = new JSONObject(msgStr);
             String openid = (String) jsonMsg.get("openid");
-            String userStr = msgRepository.getUserName(listName+"-user", openid);
-            //String userStr = msgRepository.getUserName("3-3-user", openid);
-            //log.info("用户信息：" + userStr);
-            JSONObject jsonUser = new JSONObject(userStr);
-            //String truename = (String) jsonUser.get("truename");
-            //log.info("用户名称：" + truename);
+            String userStr = msgRepository.getUserName(openid);
             JSONObject msg= new JSONObject();
             msg.put("content",jsonMsg.get("content").toString());
-            msg.put("username", jsonUser.get("truename").toString());
+            msg.put("username", userStr);
             array.put(msg);
         }
         return array;
     }
 
+    public List<String> getUserList(String listName){
+        List<String> list = msgRepository.getUserList(listName);
+        return list;
+    }
+    public JSONObject getRandomPrizeUser(String listName){
+        String s=msgRepository.getPrizeUser(listName);
+        return new JSONObject(s);
+    }
 
+    public Long getUserCount(String table){
+        return msgRepository.getUserCount(table);
+    }
 
-
+    public static void main(String[] args) {
+        System.out.println("fasfasf");
+    }
 }

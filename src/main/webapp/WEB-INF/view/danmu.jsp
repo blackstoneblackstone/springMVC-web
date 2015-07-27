@@ -35,7 +35,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
             domain: "wxscreen",
             msgUrl: "<%= this.getServletContext().getContextPath() %>/danmu/getmsg",
             canvas:  0 ,
-            isDefaultStyle:  true };
+            isDefaultStyle:  false };
         //if(window !== top) {
         //  delete danmuConfig.msgUrl;
         //}

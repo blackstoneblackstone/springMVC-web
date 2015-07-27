@@ -3,7 +3,9 @@
     <output-path>$PROJECT_DIR$/src/main/webapp</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
-        <element id="directory" name="classes" />
+        <element id="directory" name="classes">
+          <element id="module-output" name="scene_service" />
+        </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.0.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.0.2.RELEASE" />
@@ -29,6 +31,10 @@
           <element id="library" level="project" name="Maven: org.json:json:20140107" />
           <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.1.2" />
           <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.1.2" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.25" />
+          <element id="library" level="project" name="Maven: c3p0:c3p0:0.9.1.2" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:3.0.4.RELEASE" />
+          <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
         </element>
       </element>
       <element id="directory" name="META-INF">

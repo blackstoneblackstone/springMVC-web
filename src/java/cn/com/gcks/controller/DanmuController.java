@@ -46,9 +46,15 @@ public class DanmuController {
         JSONArray list = null;
         try{
             list = msgService.getMsgList(table);
+
+
+
+
             Integer j=(Integer)session.getAttribute("all_total");
-            if(list!=null){
+            if(list!=null&&j!=null){
                 j=j+list.length();
+            }else{
+                j=0;
             }
             session.setAttribute("all_total",j);
             js.put("info", "ok");
