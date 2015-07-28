@@ -29,7 +29,6 @@ public class LotteryDao {
     public  Map<String,Object>  getPrizeById(String id,String sceneid)
     {
         String sql="SELECT * from tp_wall_prize where sceneid=? and id=?";
-        System.out.println(sceneid+">>>>"+id);
         Map<String,Object> result= this.jdbcTemplate.queryForMap(sql, sceneid, id);
         return result;
     }
@@ -41,7 +40,7 @@ public class LotteryDao {
     }
     public  List<Map<String,Object>>  getPrizeRecordById(String pid,String sceneid)
     {
-        String sql="SELECT * from tp_wall_prize_record where sceneid=? and prize = ?";
+        String sql="SELECT * from tp_wall_prize_record where sceneid=? and prize = ? order by time ASC";
         List<Map<String,Object>> result= this.jdbcTemplate.queryForList(sql, sceneid, pid);
         return result;
     }

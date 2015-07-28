@@ -22,7 +22,7 @@ import java.util.Set;
  * @Date ： 2014年4月20日 下午2:27:06
  */
 public class SensitiveWordInit {
-    private String ENCODING = "GBK";    //字符编码
+    private String ENCODING = "UTF-8";    //字符编码
     @SuppressWarnings("rawtypes")
     public HashMap sensitiveWordMap;
 
@@ -127,8 +127,8 @@ public class SensitiveWordInit {
     @SuppressWarnings("resource")
     private Set<String> readSensitiveWordFile() throws Exception {
         Set<String> set = null;
-
-        File file = new File("D:\\SensitiveWord.txt");    //读取文件
+        String path=SensitiveWordInit.class.getResource ("/").getPath()+"/SensitiveWord.txt";
+        File file = new File(path);    //读取文件
         InputStreamReader read = new InputStreamReader(new FileInputStream(file), ENCODING);
         try {
             if (file.isFile() && file.exists()) {      //文件流是否存在
