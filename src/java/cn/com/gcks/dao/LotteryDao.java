@@ -42,7 +42,13 @@ public class LotteryDao {
     public  List<Map<String,Object>>  getPrizeRecordById(String pid,String sceneid)
     {
         String sql="SELECT * from tp_wall_prize_record where sceneid=? and prize = ?";
-        List<Map<String,Object>> result= this.jdbcTemplate.queryForList(sql, sceneid,pid);
+        List<Map<String,Object>> result= this.jdbcTemplate.queryForList(sql, sceneid, pid);
+        return result;
+    }
+    public  int  delPrizeRecord(String pid,String sceneid)
+    {
+        String sql="DELETE from tp_wall_prize_record where sceneid=? and prize = ?";
+        int result= this.jdbcTemplate.update(sql, sceneid,pid);
         return result;
     }
 }

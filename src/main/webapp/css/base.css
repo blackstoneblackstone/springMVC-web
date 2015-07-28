@@ -42,7 +42,7 @@ body {
 	position: absolute;
 	right: -25px;
 	top: -25px;
-	background: url("../images/screen_icons.png") -285px 0 no-repeat
+	background: url("../image/screen_icons.png") -285px 0 no-repeat
 }
 
 .loader {
@@ -59,7 +59,7 @@ body {
 	position: absolute;
 	width: 128px;
 	height: 128px;
-	background: url("../images/system-loading-big.gif") center center no-repeat;
+	background: url("../image/system-loading-big.gif") center center no-repeat;
 	z-index: 9999;
 	top: 50%;
 	margin-top: -64px;
@@ -184,7 +184,7 @@ body {
 	position: absolute;
 	right: 0;
 	top: 0;
-	background: url("../images/screen_icons.png") -285px 0 no-repeat
+	background: url("../image/screen_icons.png") -285px 0 no-repeat
 }
 
 .bigmpcodebar .label {
@@ -271,7 +271,7 @@ a.navbaritem:visited {
 	margin: auto;
 	width: 43px;
 	height: 43px;
-	background: url("../images/screen_icons.png") no-repeat
+	background: url("../image/screen_icons.png") no-repeat
 }
 
 .navbar .navbaritem.hover {
@@ -279,7 +279,7 @@ a.navbaritem:visited {
 }
 
 .navbar .navbaritem.hover .icon {
-	background: url("../images/screen_icons11.png") no-repeat
+	background: url("../image/screen_icons11.png") no-repeat
 }
 
 .navbar .navbaritem.wall .icon {
@@ -382,7 +382,7 @@ a.navbaritem:visited {
 	width: 100%;
 	height: 91%;
 	overflow: hidden;
-	background: url("../images/join_bg.jpg") center center no-repeat fixed;
+	background: url("../image/join_bg.jpg") center center no-repeat fixed;
 	background-size: cover;
 	z-index: 99999
 }

@@ -15,6 +15,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 <head>
     <meta charset="utf-8">
     <title>弹幕</title>
+    <link rel="stylesheet" href="<%= this.getServletContext().getContextPath() %>/css/base.css"  type="textcss" />
     <link rel="stylesheet" href="<%= this.getServletContext().getContextPath() %>/css/danmu.css"  type="textcss" />
     <script type="text/javascript" src="<%= this.getServletContext().getContextPath() %>/js/modernizr.custom.17774.js"></script>
     <script type="text/javascript" src="<%= this.getServletContext().getContextPath() %>/js/easeljs-0.8.0.min.js"></script>
@@ -42,7 +43,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
     </script>
 </head>
 
-<body style="background:url(<%= this.getServletContext().getContextPath() %>/image/default_bg.jpg) no-repeat;background-size:cover; ">
+<body style="background:url(<%= this.getServletContext().getContextPath() %>/image/default_bg.png) no-repeat;background-size:cover; ">
 <div id="wrap">
     <div class="danmu-box">
         <div id="js_dRow0" class="danmu-row danmu-row1" style="top:20px;"></div>
@@ -86,7 +87,14 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         <div id="js_dRow38" class="danmu-row danmu-row39" style="top:3060px;"></div>
         <div id="js_dRow39" class="danmu-row danmu-row40" style="top:3140px;"></div>
     </div>
+    <div class="navbar" style="right: 20px;width:60px;height: 100px;margin-top: 50px;z-index:999;">
 
+        <a class="navbaritem fullscreen" id="fullscreen" href="javascript:void(0);">
+            <div class="icon"></div>
+            <div class="label">全屏</div>
+        </a>
+
+    </div>
     <div class="footer clearfix">
         <div class="msg right">
             <p>微信公众号：城事汇 关注后发送内容“上墙”，然后发送内容即可上墙，如果想退出，则发送“下墙”。</p>
@@ -105,6 +113,47 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         danmu.play();
         //}
     });
+
+
+    $('#fullscreen').click(function () {
+
+        if ($('#fullscreen').hasClass('in')) {
+            exitFullscreen();
+            $('#fullscreen').removeClass("in");
+        } else {
+            fullscreen();
+            $('#fullscreen').addClass("in");
+        }
+
+    });
+
+    function fullscreen() {
+        elem = document.body;
+        if (elem.webkitRequestFullScreen) {
+            elem.webkitRequestFullScreen();
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        } else if (elem.requestFullScreen) {
+            elem.requestFullscreen();
+        } else {
+            //浏览器不支持全屏API或已被禁用
+        }
+    }
+
+    function exitFullscreen() {
+        var elem = document;
+        if (elem.webkitCancelFullScreen) {
+            elem.webkitCancelFullScreen();
+        } else if (elem.mozCancelFullScreen) {
+            elem.mozCancelFullScreen();
+        } else if (elem.cancelFullScreen) {
+            elem.cancelFullScreen();
+        } else if (elem.exitFullscreen) {
+            elem.exitFullscreen();
+        } else {
+            //浏览器不支持全屏API或已被禁用
+        }
+    }
 </script>
 </body>
 </html>

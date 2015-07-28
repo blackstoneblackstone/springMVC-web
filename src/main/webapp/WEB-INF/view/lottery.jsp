@@ -1,6 +1,6 @@
-<%@page contentType="text/html"%>
+<%@page contentType="text/html" %>
 <%@page pageEncoding="UTF-8" isELIgnored="false" %>
-<% String basepath= this.getServletContext().getContextPath();%>
+<% String basepath = this.getServletContext().getContextPath();%>
 <%--
 The taglib directive below imports the JSTL library. If you uncomment it,
 you must also add the JSTL library to the project. The Add Library... action
@@ -19,12 +19,12 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 
     <script type="text/javascript" src="<%= basepath %>/js/jquery-1.9.1.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="<%=basepath%>/js/zAlert.js" charset="utf-8"></script>
-
-<link rel="stylesheet" href="<%=basepath%>/css/screen_lottery_free.css">
-<script src="<%=basepath%>/js/artDialog/jquery.artDialog.js?skin=default"></script>
-<script src="<%=basepath%>/js/artDialog/plugins/iframeTools.js"></script>
+    <script type="text/javascript" src="<%=basepath%>/js/toast.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="<%=basepath%>/css/screen_lottery_free.css">
+    <script src="<%=basepath%>/js/artDialog/jquery.artDialog.js?skin=default"></script>
+    <script src="<%=basepath%>/js/artDialog/plugins/iframeTools.js"></script>
 </head>
-<body class="FUN WALL" style="background-image:url(<%=basepath%>/image/lottery_bg.png);" >
+<body class="FUN WALL" style="background-image:url(<%=basepath%>/image/lottery_bg.png);">
 <div class="Panel Top" style="top: 0px;">
     <img class="activity_logo" src="">
 
@@ -35,54 +35,120 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 
 <div class="Panel Lottery" style="display: block; opacity: 1;z-index:999">
     <div class="lottery-left">
-        <div class="lottery-title"><span class="title-label">抽奖</span><span class="usercount-label">共有<b>${userCount}</b>人参与</span></div>
+        <div class="lottery-title"><span class="title-label">抽奖</span><span
+                class="usercount-label">共有<b>${userCount}</b>人参与</span></div>
         <div class="lottery-run">
             <div class="user" id="header" style="background-image: url(<%=basepath%>/image/qr_code.jpg)">
                 <span class="nick-name"></span>
             </div>
             <div class="control button-run" style="display: block;">开始抽奖</div>
-            <div class="control button-stop" style="display: none;">停止</div><!--
-            <div class="control button-nextround" style="display: none;">下一轮</div>-->
+            <div class="control button-stop" style="display: none;">停止</div>
+            <!--
+                        <div class="control button-nextround" style="display: none;">下一轮</div>-->
         </div>
         <div class="lottery-bottom">
             <div class="round-num">
                 <div class="select-panel">奖项：
                     <select name="lottery_rank" id="prize_rank">
                         <option value="">请选择...</option>
-                            <c:forEach var="prize" items="${prizes}">
+                        <c:forEach var="prize" items="${prizes}">
                             <option value="${prize.id}">${prize.name}</option>
-                            </c:forEach>
+                        </c:forEach>
                     </select>
 
                     <div class="select-value">名额：<b id="prize_num"></b></div>
                 </div>
             </div>
 
-            <div class="button-reset">清空奖池</div>
-            <div class="button-showresult" onclick="showIntroDetail({pigcms:$info.id})">查看奖品</div>
-            <div class="button-reload">重新抽奖</div>
-            <div class="button-save" onclick="lottery_log({pigcms:$info.id})">中奖记录</div>
+            <div class="button-reset" onclick="clear_users()"> 清空奖池</div>
+            <div class="button-showresult" onclick="lottery_log()">查看奖品</div>
+            <div class="button-save" onclick="showIntroDetail()">中奖记录</div>
         </div>
     </div>
 
     <script>
-        var loadTime     = 3000;
+        var loadTime = 3000;
         var userinterval = '';
-        var interval     = '';
+        var interval = '';
     </script>
     <script type="text/javascript" src="<%=basepath%>/js/scene_lottery.js" charset="utf-8"></script>
     <script>
-        function showIntroDetail(id){
-            art.dialog.open('{pigcms::U('Scene/show_prize',array('token'=>$token))}&id='+id,{lock:false,title:'信息详情',width:1200,height:600,yesText:'关闭',background: '#000',opacity: 0.87});
+        function showIntroDetail(id) {
+            art.dialog.open(
+                    'http://123.124.196.226/index.php?g=User&m=Scene&a=show_plog&token=kshsth1436346812&id=${id}', {
+                        lock: false,
+                        title: '信息详情',
+                        width: 1200,
+                        height: 600,
+                        yesText: '关闭',
+                        background: '#000',
+                        opacity: 0.87
+                    }
+            );
         }
-        function lottery_log(id){
-            art.dialog.open('{pigcms::U('Scene/show_plog',array('token'=>$token))}&id='+id,{lock:false,title:'信息详情',width:1200,height:600,yesText:'关闭',background: '#000',opacity: 0.87});
+        function lottery_log() {
+            art.dialog.open(
+                    'http://123.124.196.226/index.php?g=User&m=Scene&a=show_prize&token=kshsth1436346812&id=${id}', {
+                        lock: false,
+                        title: '信息详情',
+                        width: 1200,
+                        height: 600,
+                        yesText: '关闭',
+                        background: '#000',
+                        opacity: 0.87
+                    }
+            );
+        }
+
+        function clear_users(){
+            var url="/lottery/reShangQiang"
+            $.ajax({
+                url:url,
+                type:"get",
+                success:function (data) {
+                    new Toast({context:$('.Top'),message:'开始抽奖吧'}).show();
+                }
+            });
+        }
+        function reload() {
+            var url = '/lottery/resetPrize';
+            var prize_id = $('#prize_rank').val();
+            var ht= $(".prize-list").html();
+            if(!ht||ht==""){
+                new Toast({context:$('.Top'),message:'还没抽奖呢'}).show();
+                return;
+            }
+            if (prize_id) {
+                $.ajax({
+                    url:url+"?pid="+prize_id,
+                    type:"get",
+                    success:function (data) {
+                    if (data==0||data>0) {
+                        $(".prize-list").html('');
+                        var num=$('#prize_num').html();
+                        $('#prize_num').html(parseInt(num)+parseInt(data));
+                    } else {
+                        new Toast({context:$('.Top'),message:'系统繁忙'}).show();
+                    }
+                }
+                });
+            } else {
+                new Toast({context:$('.Top'),message:'请选择奖项'}).show();
+            }
         }
     </script>
-    <div class="lottery-right"></div>
+    <div class="lottery-right">
+        <div class="lottery-title"> 获奖名单</div>
+        <div class="prize-list">
+
+        </div>
+        <div class="lottery-bottom">
+            <div class="button-reload" onclick="reload()">重新抽奖</div>
+        </div>
+    </div>
 </div>
 <div class="Panel Bottom" style="bottom: 0px;height:210px;">
-    <div class="helperpanel pulse" >
+    <div class="helperpanel pulse">
 
     </div>
     <div class="navbar" style="right: 20px;width:60px;height: 500px;top:0px;margin-top: -50px;z-index:999;">
@@ -102,50 +168,50 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 </div>
 <script>
 
-    $('.mp_account_codeimage').click(function(){
-        $('.bigmpcodebar').css('display','block');
+    $('.mp_account_codeimage').click(function () {
+        $('.bigmpcodebar').css('display', 'block');
     });
 
-    $('.closebutton').click(function(){
-        $('.bigmpcodebar').css('display','none');
+    $('.closebutton').click(function () {
+        $('.bigmpcodebar').css('display', 'none');
     });
 
-    $('#fullscreen').click(function(){
+    $('#fullscreen').click(function () {
 
-        if($('#fullscreen').hasClass('in')){
+        if ($('#fullscreen').hasClass('in')) {
             exitFullscreen();
             $('#fullscreen').removeClass("in");
-        }else{
+        } else {
             fullscreen();
             $('#fullscreen').addClass("in");
         }
 
     });
 
-    function fullscreen(){
-        elem=document.body;
-        if(elem.webkitRequestFullScreen){
+    function fullscreen() {
+        elem = document.body;
+        if (elem.webkitRequestFullScreen) {
             elem.webkitRequestFullScreen();
-        }else if(elem.mozRequestFullScreen){
+        } else if (elem.mozRequestFullScreen) {
             elem.mozRequestFullScreen();
-        }else if(elem.requestFullScreen){
+        } else if (elem.requestFullScreen) {
             elem.requestFullscreen();
-        }else{
+        } else {
             //浏览器不支持全屏API或已被禁用
         }
     }
 
-    function exitFullscreen(){
-        var elem=document;
-        if(elem.webkitCancelFullScreen){
+    function exitFullscreen() {
+        var elem = document;
+        if (elem.webkitCancelFullScreen) {
             elem.webkitCancelFullScreen();
-        }else if(elem.mozCancelFullScreen){
+        } else if (elem.mozCancelFullScreen) {
             elem.mozCancelFullScreen();
-        }else if(elem.cancelFullScreen){
+        } else if (elem.cancelFullScreen) {
             elem.cancelFullScreen();
-        }else if(elem.exitFullscreen){
+        } else if (elem.exitFullscreen) {
             elem.exitFullscreen();
-        }else{
+        } else {
             //浏览器不支持全屏API或已被禁用
         }
     }

@@ -66,7 +66,20 @@ public class MsgService {
         return msgRepository.getUserCount(table);
     }
 
-    public static void main(String[] args) {
-        System.out.println("fasfasf");
+
+    public void addUserToPrize(String tablename,String openid){
+        String user=msgRepository.read(openid);
+        if(user!=null){
+            msgRepository.userAddList(tablename,user);
+        }
+    }
+    public void reShangQiang(String tablename){
+        List<String> ls=msgRepository.getAllUsers(tablename);
+        for (String l:ls){
+            JSONObject user=  new JSONObject(l);
+            String openid=user.getString("wecha_id");
+            msgRepository.delete(openid);
+        }
+        msgRepository.clearList(tablename);
     }
 }

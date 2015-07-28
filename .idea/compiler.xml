@@ -25,7 +25,7 @@
         <module name="scene_service" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="1.6">
       <module name="scene_service" target="1.5" />
     </bytecodeTargetLevel>
   </component>

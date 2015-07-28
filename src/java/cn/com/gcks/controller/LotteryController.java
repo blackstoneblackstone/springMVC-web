@@ -38,6 +38,9 @@ public class LotteryController {
     public String index(@PathVariable("type") String type,
                         @PathVariable("id") String id,
                         HttpSession session, HttpServletRequest request) {
+        if(type==null||id==null||"null".equals(type)||"undefined".equals(type)||"null".equals(id)||"undefined".equals(id)){
+        return "ok";
+        }
         session.setAttribute("state", type + "-" + id);
         session.setAttribute("sceneid", id);
         Long count = msgService.getUserCount(type + "-" + id + "-user");
@@ -78,6 +81,20 @@ public class LotteryController {
         String table = String.valueOf(session.getAttribute("state"));
         return msgService.getUserList(table + "-user");
     }
+
+    @RequestMapping(value = "resetPrize", method = RequestMethod.GET)
+    @ResponseBody
+    public int resetPrize(HttpSession session,@RequestParam String pid) {
+        String sceneid = String.valueOf(session.getAttribute("sceneid"));
+        String table = String.valueOf(session.getAttribute("state"));
+        List<Map<String,Object>> records=lotteryDao.getPrizeRecordById(pid, sceneid);
+        for (Map<String,Object> record:records){
+            String openid= (String) record.get("openid");
+            msgService.addUserToPrize(table+"-user",openid);
+        }
+        int re= lotteryDao.delPrizeRecord(pid, sceneid);
+        return re;
+    }
     @RequestMapping(value = "getPrizeRecord", method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> getPrizeRecord(HttpSession session,@RequestParam String pid) {
@@ -88,5 +105,11 @@ public class LotteryController {
         result.put("num",Integer.valueOf(String.valueOf(ps.get("num"))) - records.size());
         result.put("records",records);
         return result;
+    }
+    @RequestMapping(value = "reShangQiang", method = RequestMethod.GET)
+    @ResponseBody
+    public void reShangQiang(HttpSession session){
+        String table = String.valueOf(session.getAttribute("state"));
+        msgService.reShangQiang(table+"-user");
     }
 }

@@ -5,6 +5,9 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +48,7 @@ public class MsgRepository {
         return list;
     }
 
+    //得到100个用户
     public List<String> getUserList(String listName) {
         List<String> result = redisTemplate.opsForList().range(listName, 0, 100);
         return result;
@@ -52,9 +56,18 @@ public class MsgRepository {
 
     public String getPrizeUser(String listName) {
         Long total = redisTemplate.opsForList().size(listName);
+        if(total==0L){
+            return null;
+        }
         Random random = new Random();
-        int s = random.nextInt(total.intValue()) % (total.intValue() + 1);
-        String user = String.valueOf(redisTemplate.opsForList().index(listName, s));
+        int s;
+        if(total!=1L){
+            s = random.nextInt(total.intValue()) % (total.intValue() + 1);
+        }else{
+            s=1;
+        }
+        String user = String.valueOf(redisTemplate.opsForList().index(listName, s-1));
+        redisTemplate.opsForList().remove(listName, 0, user);
         return user;
     }
 
@@ -65,12 +78,43 @@ public class MsgRepository {
     }
 
     public String getUserName(String key) {
-        JSONObject users = new JSONObject(getValueByKey(key));
+        JSONObject users = new JSONObject(read(key));
         return users.getString("nickname");
     }
 
-    public Object getValueByKey(final String keys) {
+    public String read(String keys) {
+        final byte[] key = redisTemplate.getKeySerializer().serialize(keys);
 
-        return "";
+        return (String) redisTemplate.execute(new RedisCallback() {
+            public String doInRedis(RedisConnection redisConnection) throws DataAccessException {
+                byte[] val = redisConnection.get(key);
+                if (val == null) {
+                    return null;
+                }
+                return (String) redisTemplate.getValueSerializer().deserialize(val);
+            }
+        });
+    }
+
+    public void delete(String keys) {
+        final byte[] key = redisTemplate.getKeySerializer().serialize(keys);
+        redisTemplate.execute(new RedisCallback() {
+            public String doInRedis(RedisConnection redisConnection) throws DataAccessException {
+                redisConnection.del(key);
+                return null;
+            }
+        });
+    }
+
+    public void userAddList(String tablename, String value) {
+        redisTemplate.opsForList().rightPush(tablename, value);
+    }
+
+    public List<String> getAllUsers(String listName) {
+        List<String> result = redisTemplate.opsForList().range(listName, 0, -1);
+        return result;
+    }
+    public void clearList(String listName){
+        redisTemplate.opsForList().trim(listName, 99999999, -1);
     }
 }
