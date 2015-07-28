@@ -24,21 +24,23 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
     <script src="<%=basepath%>/js/artDialog/jquery.artDialog.js?skin=default"></script>
     <script src="<%=basepath%>/js/artDialog/plugins/iframeTools.js"></script>
 </head>
-<body class="FUN WALL" style="background-image:url(<%=basepath%>/image/lottery_bg.png);">
-<div class="Panel Top" style="top: 0px;">
-    <img class="activity_logo" src="">
+<body class="FUN WALL" style="background-image:url(<%=basepath%>/image/xuehua_bg.png);">
+<div class="start_view" style="background-image:url(<%=basepath%>/image/start_bg.png);background-size:100% 768px;width: 100%;height: 768px">
+    <img class="start_img" onclick="intolot()" style="right:100px;cursor:pointer; bottom: 50px;position: absolute;" src="<%=basepath%>/image/into_lot.png"/>
+</div>
 
-    <if condition="$info.qrcode neq ''">
-        <img class="mp_account_codeimage" src="<%=basepath%>/image/qr_code.jpg">
-    </if>
+<div class="lottery_view" style="display: none">
+<div class="Panel Top" style="top: 0px;">
+
+        <img class="top_wenzi" src="<%=basepath%>/image/choujiang_wenzi.png">
 </div>
 
 <div class="Panel Lottery" style="display: block; opacity: 1;z-index:999">
     <div class="lottery-left">
-        <div class="lottery-title"><span class="title-label">抽奖</span><span
+        <div class="lottery-title"> <span class="title-label">抽奖</span><span
                 class="usercount-label">共有<b>${userCount}</b>人参与</span></div>
         <div class="lottery-run">
-            <div class="user" id="header" style="background-image: url(<%=basepath%>/image/qr_code.jpg)">
+            <div class="user" id="header">
                 <span class="nick-name"></span>
             </div>
             <div class="control button-run" style="display: block;">开始抽奖</div>
@@ -49,13 +51,14 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         <div class="lottery-bottom">
             <div class="round-num">
                 <div class="select-panel">奖项：
+                    <div class="lottery_rank">
                     <select name="lottery_rank" id="prize_rank">
                         <option value="">请选择...</option>
                         <c:forEach var="prize" items="${prizes}">
                             <option value="${prize.id}">${prize.name}</option>
                         </c:forEach>
                     </select>
-
+                    </div>
                     <div class="select-value">名额：<b id="prize_num"></b></div>
                 </div>
             </div>
@@ -73,9 +76,19 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
     </script>
     <script type="text/javascript" src="<%=basepath%>/js/scene_lottery.js" charset="utf-8"></script>
     <script>
+
+        function intolot(){
+            $('.start_img').hide();
+            $('.lottery_view').fadeIn(3000);
+            $(".start_view").animate({
+                left:'250px',
+                opacity:'0.5',
+                height:'1px',
+                width:'1px'});
+        }
         function showIntroDetail(id) {
             art.dialog.open(
-                    'http://123.124.196.226/index.php?g=User&m=Scene&a=show_plog&token=kshsth1436346812&id=${id}', {
+                    'http://123.124.196.233/index.php?g=User&m=Scene&a=show_plog&token=kshsth1436346812&id=${id}', {
                         lock: false,
                         title: '信息详情',
                         width: 1200,
@@ -88,7 +101,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         }
         function lottery_log() {
             art.dialog.open(
-                    'http://123.124.196.226/index.php?g=User&m=Scene&a=show_prize&token=kshsth1436346812&id=${id}', {
+                    'http://123.124.196.233/index.php?g=User&m=Scene&a=show_prize&token=kshsth1436346812&id=${id}', {
                         lock: false,
                         title: '信息详情',
                         width: 1200,
@@ -138,7 +151,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         }
     </script>
     <div class="lottery-right">
-        <div class="lottery-title"> 获奖名单</div>
+        <div class="lottery-title"> <span class="title-label">获奖名单</span></div>
         <div class="prize-list">
 
         </div>
@@ -149,21 +162,16 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 </div>
 <div class="Panel Bottom" style="bottom: 0px;height:210px;">
     <div class="helperpanel pulse">
+        <img class="mp_account_codeimage" src="<%=basepath%>/image/qr_code.jpg">
+        <img class="wenzi_code" src="<%=basepath%>/image/wenzi_chengshihui.png">
 
     </div>
-    <div class="navbar" style="right: 20px;width:60px;height: 500px;top:0px;margin-top: -50px;z-index:999;">
 
-        <a class="navbaritem fullscreen" id="fullscreen" href="javascript:void(0);">
-            <div class="icon"></div>
-            <div class="label">全屏</div>
-        </a>
-
-    </div>
 </div>
 <div id="leafContainer"></div>
 <div style="display: none;" class="bigmpcodebar">
     <div class="closebutton"></div>
-    <div class="label">微信扫一扫，发送<span class="acivity_key">城事汇</span>即可参与</div>
+    <div class="label">微信扫一扫，发送<span class="acivity_key">“雪花啤酒”</span>即可参与</div>
     <img src="<%=basepath%>/image/qr_code.jpg">
 </div>
 <script>
@@ -174,18 +182,6 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 
     $('.closebutton').click(function () {
         $('.bigmpcodebar').css('display', 'none');
-    });
-
-    $('#fullscreen').click(function () {
-
-        if ($('#fullscreen').hasClass('in')) {
-            exitFullscreen();
-            $('#fullscreen').removeClass("in");
-        } else {
-            fullscreen();
-            $('#fullscreen').addClass("in");
-        }
-
     });
 
     function fullscreen() {
@@ -216,5 +212,29 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         }
     }
 </script>
+</div>
+<div class="bar111" style="position:absolute; right:30px;bottom: 200px; width:60px;height: 100px;z-index:999;">
+
+    <a class="navbaritem fullscreen" id="fullscreen" href="javascript:void(0);">
+        <div class="icon"><img id="img1" src="<%=basepath%>/image/fangda.png"></div>
+    </a>
+<script>
+
+    $('#fullscreen').click(function () {
+
+        if ($('#fullscreen').hasClass('in')) {
+            exitFullscreen();
+            $('#img1').attr('src','<%=basepath%>/image/fangda.png');
+            $('#fullscreen').removeClass("in");
+        } else {
+            fullscreen();
+            $('#img1').attr('src','<%=basepath%>/image/suoxiao.png');
+            $('#fullscreen').addClass("in");
+        }
+
+    });
+
+</script>
+</div>
 </body>
 </html>

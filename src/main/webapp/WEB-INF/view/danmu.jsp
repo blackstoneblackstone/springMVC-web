@@ -43,7 +43,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
     </script>
 </head>
 
-<body style="background:url(<%= this.getServletContext().getContextPath() %>/image/default_bg.png) no-repeat;background-size:cover; ">
+<body style="background:url(<%= this.getServletContext().getContextPath() %>/image/xuehua_bg.png) no-repeat;background-size:cover; ">
 <div id="wrap">
     <div class="danmu-box">
         <div id="js_dRow0" class="danmu-row danmu-row1" style="top:20px;"></div>

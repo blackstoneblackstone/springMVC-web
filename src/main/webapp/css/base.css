@@ -145,17 +145,21 @@ body {
 	left: 5%
 }
 
+.wenzi_code{
+	margin-top: 20px;
+	float: right;
+	margin-right: 20px;
+}
+
 .mp_account_codeimage {
 	cursor: pointer;
 	display: block;
-	position: absolute;
 	width: 90px;
 	height: 90px;
-	top: 50%;
-	margin-top: -45px;
-	right: 5%
-}
+	float: right;
+	margin-right: 60px;
 
+}
 .bigmpcodebar {
 	display: none;
 	position: absolute;
@@ -274,6 +278,7 @@ a.navbaritem:visited {
 	background: url("../image/screen_icons.png") no-repeat
 }
 
+
 .navbar .navbaritem.hover {
 	color: #7dd581
 }
@@ -317,14 +322,14 @@ a.navbaritem:visited {
 
 .helperpanel {
 	text-align: center;
-	height: 50px;
+	height: 100px;
 	width: 100%;
 	position: absolute;
 	left: 0;
-	top: 50%;
 	margin-top: -25px;
 	font-size: 18px;
 	line-height: 20px;
+	bottom: 10px;
 	color: #fff
 }
 
