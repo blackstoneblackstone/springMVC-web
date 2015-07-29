@@ -95,11 +95,21 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         </a>
 
     </div>
-    <div class="footer clearfix">
-        <div class="msg right">
-            <p>微信公众号：城事汇 关注后发送内容“上墙”，然后发送内容即可上墙，如果想退出，则发送“下墙”。</p>
-        </div>
+
+</div>
+<div class="Panel Bottom" style="bottom: 0px;height:210px;">
+    <div class="helperpanel pulse">
+        <img class="mp_account_codeimage" src="<%=this.getServletContext().getContextPath() %>/image/qr_code.jpg">
+        <img class="wenzi_code" src="<%=this.getServletContext().getContextPath() %>/image/wenzi_chengshihui.png">
+
     </div>
+
+</div>
+<div id="leafContainer"></div>
+<div style="display: none;" class="bigmpcodebar">
+    <div class="closebutton"></div>
+    <div class="label">微信扫一扫，发送<span class="acivity_key">“雪花啤酒”</span>即可参与</div>
+    <img src="<%= this.getServletContext().getContextPath()%>/image/qr_code.jpg">
 </div>
 <script type="text/javascript" src="<%= this.getServletContext().getContextPath() %>/js/danmu.min.js"></script>
 
@@ -114,6 +124,13 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         //}
     });
 
+    $('.mp_account_codeimage').click(function () {
+        $('.bigmpcodebar').css('display', 'block');
+    });
+
+    $('.closebutton').click(function () {
+        $('.bigmpcodebar').css('display', 'none');
+    });
 
     $('#fullscreen').click(function () {
 
