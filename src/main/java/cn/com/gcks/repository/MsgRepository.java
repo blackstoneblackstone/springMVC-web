@@ -60,10 +60,10 @@ public class MsgRepository {
         Long total=redisTemplate.opsForList().size(listName);
         Random random = new Random();
         int s;
-        if(total!=1L){
+        if(total!=1L&&total>100){
             s = random.nextInt(total.intValue()-100) % (total.intValue()-100 + 1);
         }else{
-            s=1;
+            s=0;
         }
         List<String> result = redisTemplate.opsForList().range(listName, s, s+100);
         return result;
