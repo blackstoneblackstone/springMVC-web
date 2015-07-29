@@ -1,9 +1,7 @@
 package cn.com.gcks.dao;
 
-import com.sun.xml.internal.bind.annotation.OverrideAnnotationOf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
