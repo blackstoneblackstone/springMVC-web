@@ -43,7 +43,6 @@ $('.button-run').click(function () {
         if (prize_id) {
             $.getJSON(url, {}, function (data) {
                 if (data.length == 0) {
-                    clearInterval(interval);
                     new Toast({context: $('.Top'), message: '奖池里没人了'}).show();
                 } else {
                     interval = setInterval(function () {
@@ -52,15 +51,16 @@ $('.button-run').click(function () {
                         var d = $.parseJSON(data[i]);
                         $('#header').css('background-image', 'url(' + d.portrait + ')');
                         $('#header .nick-name').html(d.nickname);
-                        $('.button-run').hide();
-                        $('.button-stop').show();
                     }, 200);
+                    $('.button-run').hide();
+                    $('.button-stop').show();
                 }
             });
         } else {
             new Toast({context: $('.Top'), message: '请先选择奖项'}).show();
         }
     }
+
 });
 
 $('.button-stop').click(function () {
@@ -69,8 +69,8 @@ $('.button-stop').click(function () {
     var url = '../../lottery/setPrize?pid=' + prize_id;
     var num = $('#prize_num').html() * 1;
     if (num === 0) {
-        clearInterval(interval);
-        return new Toast({context: $('.Top'), message: '奖品都没了，根本停不下来'}).show();
+        clearrval(interval);
+        return new Toast({context: $('.Top'), message: '奖品都没了，可手还是停不下来'}).show();
     }
     $.ajax(
         {
@@ -81,28 +81,32 @@ $('.button-stop').click(function () {
                 if (data.length == 0) {
                     $('#header').css('background-image', "url('../../image/wumingshi.png')");
                     $('#header .nick-name').html('无名氏');
-                    $('.button-run').show();
                     $('.button-stop').hide();
+                    $('.button-run').show();
                     return new Toast({context: $('.Top'), message: '抽到一个无名氏，再来一次'}).show();
+                }else {
+                    var len = data.length;
+                    $('#header').css('background-image', 'url(' + data[len - 1].portrait + ')');
+                    $('#header .nick-name').html(data[len - 1].nickname);
+                    var html = createHtml(data, true);
+                    var right = $('.prize-list');
+                    right.html(html);
+                    $('#prize_num').html(num - 1);
+                    $('.button-stop').hide();
+                    $('.button-run').show();
                 }
-                var len = data.length;
-                $('#header').css('background-image', 'url(' + data[len - 1].portrait + ')');
-                $('#header .nick-name').html(data[len - 1].nickname);
-                var html = createHtml(data, true);
-                var right = $('.prize-list');
-                right.html(html);
-                $('#prize_num').html(num - 1);
             },
             error: function (data) {
                 $('#header').css('background-image', "url('../../image/wumingshi.png')");
                 $('#header .nick-name').html('无名氏');
+                $('.button-stop').hide();
+                $('.button-run').show();
                 return new Toast({context: $('.Top'), message: '抽到一个无名氏，再来一次'}).show();
             }
         }
     )
     ;
-    $('.button-run').show();
-    $('.button-stop').hide();
+
 });
 
 function GetRandomNum(Min, Max) {
