@@ -25,7 +25,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
     <script src="<%=basepath%>/js/artDialog/plugins/iframeTools.js"></script>
 </head>
 <body class="FUN WALL" style="background-image:url(<%=basepath%>/image/xuehua_bg.png);">
-<div class="start_view" style="background-image:url(<%=basepath%>/image/start_bg.png);background-size:100% 768px;width: 100%;height: 768px">
+<div class="start_view" style="background:url(<%=basepath%>/image/start_bg.png) no-repeat;background-size:100% 900px;width: 100%;height: 768px">
     <img class="start_img" onclick="intolot()" style="right:100px;cursor:pointer; bottom: 50px;position: absolute;" src="<%=basepath%>/image/into_lot.png"/>
 </div>
 
@@ -73,6 +73,9 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         var loadTime = 3000;
         var userinterval = '';
         var interval = '';
+        $.ajaxSetup({
+            async: false
+        });
     </script>
     <script type="text/javascript" src="<%=basepath%>/js/scene_lottery.js" charset="utf-8"></script>
     <script>
@@ -88,7 +91,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         }
         function showIntroDetail(id) {
             art.dialog.open(
-                    'http://123.124.196.233/index.php?g=User&m=Scene&a=show_plog&token=kshsth1436346812&id=${id}', {
+                    '<%=basepath%>/lottery/showPlog', {
                         lock: false,
                         title: '信息详情',
                         width: 1200,
@@ -101,7 +104,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         }
         function lottery_log() {
             art.dialog.open(
-                    'http://123.124.196.233/index.php?g=User&m=Scene&a=show_prize&token=kshsth1436346812&id=${id}', {
+                    '<%=basepath%>/lottery/showPrize', {
                         lock: false,
                         title: '信息详情',
                         width: 1200,
@@ -114,7 +117,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         }
 
         function clear_users(){
-            var url="/lottery/reShangQiang"
+            var url="<%=basepath%>/lottery/reShangQiang"
             $.ajax({
                 url:url,
                 type:"get",
@@ -124,7 +127,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
             });
         }
         function reload() {
-            var url = '/lottery/resetPrize';
+            var url = '<%=basepath%>/lottery/resetPrize';
             var prize_id = $('#prize_rank').val();
             var ht= $(".prize-list").html();
             if(!ht||ht==""){

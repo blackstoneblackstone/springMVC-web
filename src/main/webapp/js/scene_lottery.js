@@ -6,7 +6,7 @@ $('.button-reload').click(function () {
 userinterval = setInterval(loadUser, loadTime);
 
 function loadUser() {
-    var url = '/lottery/getUserCount';
+    var url = '../../lottery/getUserCount';
     $.getJSON(url, function (data) {
         if (data.err == 0) {
             $('.usercount-label b').html(data.count);
@@ -16,7 +16,7 @@ function loadUser() {
 }
 $("#prize_rank").change(function () {
     var val = $(this).val();
-    var url = '/lottery/getPrizeRecord';
+    var url = '../../lottery/getPrizeRecord';
     $('.prize-list').html('');
     if (val != '') {
         $.getJSON(url, {'pid': val}, function (data) {
@@ -34,17 +34,17 @@ $("#prize_rank").change(function () {
 
 
 $('.button-run').click(function () {
-    var pnum = $('#prize_num').html();
-    if (pnum == 0) {
-        new Toast({context: $('.Top'), message: '没有奖品了'}).show();
+    var pnum = $('#prize_num').html()* 1;
+    if (pnum === 0) {
+        return new Toast({context: $('.Top'), message: '没有奖品了'}).show();
     } else {
         var prize_id = $('#prize_rank').val();
-        var url = '/lottery/getUser';
+        var url = '../../lottery/getUser';
         if (prize_id) {
             $.getJSON(url, {}, function (data) {
                 if (data.length == 0) {
                     clearInterval(interval);
-                    alert("奖池里没人了");
+                    new Toast({context: $('.Top'), message: '奖池里没人了'}).show();
                 } else {
                     interval = setInterval(function () {
                         var len = data.length - 1;
@@ -58,36 +58,51 @@ $('.button-run').click(function () {
                 }
             });
         } else {
-             new Toast({context: $('.Top'), message: '请先选择奖项'}).show();
+            new Toast({context: $('.Top'), message: '请先选择奖项'}).show();
         }
     }
 });
 
 $('.button-stop').click(function () {
     clearInterval(interval);
-
     var prize_id = $('#prize_rank').val();
-    var url = '/lottery/setPrize';
-
-    $.getJSON(url, {'pid': prize_id}, function (data) {
-        if (data.length == 0) {
-            $('#header').css('background-image', "url('../../image/wumingshi.png')");
-            $('#header .nick-name').html('无名氏');
-            $('.button-run').show();
-            $('.button-stop').hide();
-            return new Toast({context: $('.Top'), message: '抽到一个无名氏，再来一次'}).show();
+    var url = '../../lottery/setPrize?pid=' + prize_id;
+    var num = $('#prize_num').html() * 1;
+    if (num === 0) {
+        clearInterval(interval);
+        return new Toast({context: $('.Top'), message: '奖品都没了，根本停不下来'}).show();
+    }
+    $.ajax(
+        {
+            url: url,
+            type: 'get',
+            async: false,
+            success: function (data) {
+                if (data.length == 0) {
+                    $('#header').css('background-image', "url('../../image/wumingshi.png')");
+                    $('#header .nick-name').html('无名氏');
+                    $('.button-run').show();
+                    $('.button-stop').hide();
+                    return new Toast({context: $('.Top'), message: '抽到一个无名氏，再来一次'}).show();
+                }
+                var len = data.length;
+                $('#header').css('background-image', 'url(' + data[len - 1].portrait + ')');
+                $('#header .nick-name').html(data[len - 1].nickname);
+                var html = createHtml(data, true);
+                var right = $('.prize-list');
+                right.html(html);
+                $('#prize_num').html(num - 1);
+            },
+            error: function (data) {
+                $('#header').css('background-image', "url('../../image/wumingshi.png')");
+                $('#header .nick-name').html('无名氏');
+                return new Toast({context: $('.Top'), message: '抽到一个无名氏，再来一次'}).show();
+            }
         }
-        var len = data.length;
-        $('#header').css('background-image', 'url(' + data[len - 1].portrait + ')');
-        $('#header .nick-name').html(data[len - 1].nickname);
-        $('.button-run').show();
-        $('.button-stop').hide();
-        var html = createHtml(data, true);
-        var right = $('.prize-list');
-        right.html(html);
-        var num = $('#prize_num').html() * 1;
-        $('#prize_num').html(num - 1);
-    });
+    )
+    ;
+    $('.button-run').show();
+    $('.button-stop').hide();
 });
 
 function GetRandomNum(Min, Max) {

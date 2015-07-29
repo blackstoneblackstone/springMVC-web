@@ -21,7 +21,7 @@ public class LotteryDao {
 
     public  List<Map<String,Object>>  getPrize(String sceneid)
     {
-        String sql="SELECT * from tp_wall_prize where sceneid=?";
+        String sql="SELECT * from tp_wall_prize where sceneid=? ORDER by id ASC";
         List<Map<String,Object>> result= this.jdbcTemplate.queryForList(sql,sceneid);
         return result;
     }

@@ -120,4 +120,30 @@ public class LotteryController {
         String table = String.valueOf(session.getAttribute("state"));
         msgService.reShangQiang(table + "-user");
     }
+    @RequestMapping(value = "showPlog", method = RequestMethod.GET)
+    public String showPlog(HttpSession session,@RequestParam(required = false) String pid,HttpServletRequest request) {
+        String sceneid = String.valueOf(session.getAttribute("sceneid"));
+        List<Map<String,Object>> ps=lotteryDao.getPrize(sceneid);
+        List<Map<String,Object>>   psr=new ArrayList<Map<String, Object>>();
+        if(pid==null){
+            if(ps!=null&&ps.size()!=0){
+                String id=String.valueOf(ps.get(0).get("id"));
+                pid=id;
+                psr =lotteryDao.getPrizeRecordById(id, sceneid);
+            }
+        }else{
+            psr =lotteryDao.getPrizeRecordById(pid, sceneid);
+        }
+        request.setAttribute("ps",ps);
+        request.setAttribute("psr",psr);
+        request.setAttribute("pid", pid);
+        return "showPlog";
+    }
+    @RequestMapping(value = "showPrize", method = RequestMethod.GET)
+    public String showPrize(HttpSession session,HttpServletRequest request) {
+        String sceneid = String.valueOf(session.getAttribute("sceneid"));
+        List<Map<String,Object>> ps=lotteryDao.getPrize(sceneid);
+        request.setAttribute("ps",ps);
+        return "showPrize";
+    }
 }
