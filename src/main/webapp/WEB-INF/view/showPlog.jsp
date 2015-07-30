@@ -14,7 +14,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
     <title>中奖纪录</title>
     <link rel="stylesheet" type="text/css" href="<%=basepath%>/css/winner_list.css">
 </head>
-<body style="width:1200px;min-height:550px;text-align:center;">
+<body style="background-color:#0099cc;width:1200px;min-height:550px;text-align:center;">
 <h1>中奖记录</h1>
 <ul class="rotate-tab clearfix">
     <c:forEach var="p" items="${ps}">

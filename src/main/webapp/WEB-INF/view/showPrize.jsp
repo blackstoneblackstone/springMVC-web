@@ -21,7 +21,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         .member-list p{text-align: left;margin:0;height: 30px;line-height: 30px;overflow: hidden;}
     </style>
 </head>
-<body style="width:1200px;height:auto;">
+<body style="background-color:#0099cc;width:1200px;height:auto;>
 <h1>奖品清单</h1>
 <div class="member-list" style="height: 403px;">
     <ul class="clearfix">
